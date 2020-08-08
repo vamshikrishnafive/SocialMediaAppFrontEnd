@@ -36,7 +36,10 @@ class DeleteUser extends Component {
             return <Redirect to="/" />
         }
         return (
-            <button onClick = {this.deleteComfirmed} className = "waves-effect waves-light btn-small #b71c1c red darken-4"> Delete Profile </button>
+            <button 
+                className="waves-effect waves-light btn-small #0d47a1 black darken-4 left" 
+                onClick = {this.deleteComfirmed} 
+                > <i class="material-icons">delete_sweep</i> </button>
         )
     }
 }

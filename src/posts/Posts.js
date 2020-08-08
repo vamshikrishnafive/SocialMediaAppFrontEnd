@@ -25,7 +25,7 @@ class Posts extends Component {
     }
 
     renderPost = posts => (
-        <div className="left row">
+        <div className="row">
             {posts.map((post, i) => {
 
                 const postedId = post.postedBy ?
@@ -35,38 +35,33 @@ class Posts extends Component {
                     "Unknown";
 
                 return (
-                    <div className="col s12 m7" key={i}>
-                        <div className="card">
-                        <div className = "card image">
-                        <img 
-                            className = "responsive-img"
+                        <div className="card" key={i}>
+                        <div className="card-action text-italian text-darken-2">
+                            <h5>
+                                <Link to={`/user/${postedId}`}>
+                                    {postedName}
+                                </Link>
+                            </h5>
+                        </div>
+                            
+                            <img
+                            className = "card-image"
                             src = {`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
                             alt = {post.title}
                             onError = {i => (i.target.src = `${DefaultePost}`)}
-                            style = {{height:"199px", width:"500px"}}
+                            style = {{height:"500px", width:"662px", objectFit:"fill"}}
                             />
-                        <span className="font-w­eig­ht-­normal card-title"></span>
-                        </div>  
                         <div className="card-content">
-                        <span 
-                            class="card-title activator grey-text text-darken-4">
-                            {post.title} 
-                            <Link to={`/post/${post._id}`}><i class="material-icons right">add</i></Link>  
+                        <span class="card-title blue-text text-darken-4">
+                            {post.title}
                         </span>
-                            <p>{post.body.substr(0, 100)}</p>
-                        </div>
-                        <div className="card-action">
-                            <span className="font-italic mark">
-                                PostedBy <Link to={`/user/${postedId}`}>
-                                    {postedName}</Link>on {new Date(post.created).toDateString()}
-                            </span>
-                            {/* <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>Card Title</span>
-                                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                            </div> */}
+                            <Link to={`/post/${post._id}`}>
+                            <p class="card-body">{post.body.substr(0,100)} ...read More</p>
+                            </Link>
+                            <h6>{post.likes.length} likes</h6>
+                            <h6>{post.comments.length} comments</h6>
                         </div>
                         </div>
-                    </div>
                 )
             })}
         </div>
@@ -77,7 +72,7 @@ class Posts extends Component {
         return (
             <div className="container">
                 <h2 className=" mt-5 mb-5">
-                {!posts.length ? <div className =  'center'>
+                {!posts.length ? <div className = 'center'>
                     <div class="preloader-wrapper big active">
                         <div class="spinner-layer spinner-blue">
                             <div class="circle-clipper left">
@@ -118,7 +113,7 @@ class Posts extends Component {
                                 <div class="circle"></div>
                             </div>
                         </div>
-                    </div></div> : "Recent Post"}
+                    </div></div> : " "}
                 </h2>
                 {this.renderPost(posts)}
             </div>

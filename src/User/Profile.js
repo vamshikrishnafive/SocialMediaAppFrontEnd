@@ -85,56 +85,74 @@ class Profile extends Component {
         const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultImage
 
         return (
-            <div className="row" >
-                <h2 className="col s2 m4 flow-text"> Profile </h2>
-                <div className="col s10" >
-                    <img
-                        src={photoUrl}
-                        alt={user.name}
-                        style={{ height: "200px", width: 'auto' }}
-                        onError={i => (i.target.src = `${DefaultImage}`)}
-                        className="circle responsive-img"
-                    />
-
-                    <div className="col s10 flow-text">
-                        <p> Hello {user.name} </p>
-                        <p> EMail {user.email} </p>
-                        <p> {`Joined ${new Date(user.created).toDateString()}`} </p>
-                        <p className="lead">{user.about}</p>
+        <div className = "row">
+            <div style={{maxWidth:"550px",margin:"0px auto"}}>
+                <div style = {{
+                    display:"flex",
+                    justifyContent:"space-around",
+                    margin:"25px 0px",
+                    borderBottom:"1px solid grey"
+                    }}>
+                    <div>
+                        <img
+                            src={photoUrl}
+                            alt={user.name}
+                            style = {{width:"160px",height:"160px",borderRadius:"80px"}}
+                            onError={i => (i.target.src = `${DefaultImage}`)}
+                        />
                     </div>
                     <div>
-                        {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
-                            <div className="col s10 flow-text" >
+                        <h4> {user.name} </h4>
+                        {isAuthenticated().user && isAuthenticated().user._id === user._id && (
+                            
                                 <Link
-                                    className="waves-effect waves-light btn-small #0d47a1 blue darken-4"
-                                    to={`/post/create`} >
-                                    Create Post
+                                    style={{margin:"10px 5px 100px 230px"}}
+                                    to={`/user/edit/${this.state.user._id}`}>
+                                    <i class="material-icons">create</i>
                                 </Link>
-                                <Link
-                                    className="waves-effect waves-light btn-small #0d47a1 blue darken-4"
-                                    to={`/user/edit/${this.state.user._id}`} >
-                                    Edit Profile
-                                </Link>
-                                <DeleteUser userId={user._id} />
-                            </div>
-                        ) : (<FollowProfileButton
-                            following={this.state.following}
-                            onButtonclick={this.clickFollowButton}
-                        />
+    
                             )}
+                        <div style = {{display:"flex",justifyContent:"space-between",width:"108%"}}>
+                            <h6> {posts.length} posts </h6>
+                            <h6> {user.followers.length} followers </h6>
+                            <h6> {user.following.length} following </h6>
+                        </div>
                     </div>
                 </div>
-            <hr />
-            <div className="row">
+
+                <div>
+                    <p> Email: {user.email} </p>
+                    <p> {`Joined on ${new Date(user.created).toUTCString()}`} </p>
+                    <p>{user.about}</p>
+                {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
+                <div className="col s10 flow-text" >
+                    <Link
+                        className="waves-effect waves-light btn-small #0d47a1 white darken-4 left"
+                        to={`/post/create`} >
+                        <i class="material-icons">add_a_photo</i>
+                    </Link>
+                    <DeleteUser userId={user._id} />
+                </div>
+                ) : (
                 
+                <FollowProfileButton
+                following={this.state.following}
+                onButtonclick={this.clickFollowButton}
+                />
+                )}
+                </div>
             </div>
-            <hr />
+            <br/>
+            <div className = "row">
+            <br/>
             <ProfileTabs
                 following={user.following}
                 followers={user.followers}
                 posts={posts}
             />
             </div>
+           
+        </div>
         )
     }
 }

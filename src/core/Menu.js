@@ -12,8 +12,7 @@ const Menu = ({ history }) => (
     <div className="navbar-fixed">
         <nav>
             <div className="nav-wrapper">
-                <Link className="brand-logo blue-black" style={isActive(history, '/')} to="/"> Home </Link>  
-                {/* <a href="#!" className="brand-logo">Logo</a> */}
+                <Link className="brand-logo blue-black" style={isActive(history, '/')} to="/">  instagram </Link> 
                 <ul className="right hide-on-med-and-down">
                     <li className="nav-item  blue-black"><Link style={isActive(history, '/users')} to="/Users"> Users </Link></li>
                     <li 

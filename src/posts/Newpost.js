@@ -72,18 +72,17 @@ class Newpost extends Component {
     newPostForm = ( title, body ) => (
         <div class="row">
             <form class="col s12">
-                <div class="row">
+                    <div class="row">
                     <div class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
                             <input 
                                 type = "text" 
-                                className = "from-control" 
+                                className = " from-control" 
                                 onChange = {this.handleChange("title")}
                                 value = {title}
                             />
-                            <label for="text">Title</label>
-                            {/* <span class="helper-text" data-error="wrong" data-success="right">Helper text</span> */}
+                            <label for="Title">Title</label>
                             </div>
                         </div>
                     </div>
@@ -99,29 +98,32 @@ class Newpost extends Component {
                                         value = {body}
                                     />
                                     <label for="text">Body</label>
-                                    {/* <span class="helper-text" data-error="wrong" data-success="right">Helper text</span> */}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>Photo</span>
-                            <input
-                                onChange={this.handleChange("photo")}
-                                type="file"
-                                accept="image/*"
-                                className="form-control"
-                            />
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text"/>
-                    </div>
-                </div>
+                        <div class = "row">
+                            <label>Post</label>
+                            <div class = "file-field input-field">
+                                <div class = "btn">
+                                    <span>upload</span>
+                                    <input
+                                        onChange={this.handleChange("photo")}
+                                        type="file"
+                                        accept="image/*"
+                                    />
+                                </div>
+                  
+                                <div class = "file-path-wrapper">
+                                    <input class = "file-path validate" type = "text"
+                                        placeholder = "Add your file" />
+                                </div>
+                            </div>
+                        </div>
                 <button 
                     onClick = {this.clickToSubmit} 
                     className = "btn waves-effect waves-light right" >
-                    Create Post <i class="material-icons right">send</i>
+                    CreatePost<i class="material-icons right">file_upload</i>
                 </button>
             </form>
         </div>

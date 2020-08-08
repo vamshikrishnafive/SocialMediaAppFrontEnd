@@ -25,19 +25,16 @@ class Users extends Component {
     renderUser = users => (
         <div className="row">
             {users.map((user, i) => (
-                <div className="card col md-4" key = {i}>
-                <img 
-                src = {`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
-                onError = {i => (i.target.src = `${DefaultImage}`)}
-                alt = {user.name} 
-                style = {{height: "200px", width: 'auto'}}
-                className = "circle center responsive-img"
-                />
-                <h4 className="center card-title">{user.name.substr(0,50)}</h4>
-                <div className="card-content">
-                <p>{user.email}</p>
-                </div>
-                <div className="card-action">
+                <div className="card col s1 m2" key = {i}>
+                    <img 
+                        src = {`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
+                        onError = {i => (i.target.src = `${DefaultImage}`)}
+                        alt = {user.name} 
+                        style = {{height: "200px", width: 'auto'}}
+                        className = "circle center responsive-img"
+                    />
+                <h4 className="center card-title blue-text text-darken-4">{user.name}</h4>
+                <div className="center card-action">
                 <Link to={`user/${user._id}`}>view Profile</Link>
                 </div>
 
@@ -71,8 +68,8 @@ class Users extends Component {
     render() {
         const { users } = this.state
         return (
-            <div className="container">
-                <h2 className=" mt-5 mb-5">Users</h2>
+            <div className="row">
+                <h2 className="col s12">All User</h2>
                 {this.renderUser(users)}
             </div>
         )

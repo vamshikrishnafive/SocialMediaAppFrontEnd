@@ -49,19 +49,17 @@ class FindPeople extends Component {
     renderUsers = users => (
         <div className="row">
             {users.map((user, i) => (
-                <div className="card col md-4" key={i}>
+                <div className="card col s1 m4" key={i}>
                     <img
                         src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
                         alt={user.name}
                         onError={i => (i.target.src = `${DefaultProfile}`)}
                         style={{ height: "200px", width: "auto" }}
-                        className="circle center responsive-img" 
+                        className="center circle responsive-img" 
                     />
-                        <h4 className="center card-title">{user.name}</h4>
-                        <div className="card-content">
+                        <span><h4 className="card-title">{user.name}</h4></span>
                         <p>{user.email}</p>
-                        </div>
-                        <div className = "card-action">
+                        <div className = "left card-action">
                         <Link
                             to={`/user/${user._id}`}
                             className="btn float-leftwaves-effect waves-light btn-small blue">
@@ -69,7 +67,7 @@ class FindPeople extends Component {
                         </Link>
                         <button
                             onClick={() => this.clickFollow(user, i)}
-                            className="waves-effect waves-light btn-small red">
+                            className="btn waves-effect waves-light btn-small red">
                             Follow
                         </button>
                     </div>
@@ -81,8 +79,8 @@ class FindPeople extends Component {
     render() {
         const { users, open, followMessage } = this.state;
         return (
-            <div className="container">
-                <h2 className="col s12">Find People</h2>
+            <div className="row">
+                <h2 className="col s12">Suggested for you</h2>
 
                 {open && (
                     <div className="flow-text">{followMessage}</div>

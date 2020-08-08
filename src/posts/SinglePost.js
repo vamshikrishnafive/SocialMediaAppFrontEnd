@@ -99,16 +99,14 @@ class SinglePost extends Component {
         const { like, likes } = this.state 
         return (
             <div className="row">
-            <div className =  "col s12">
-            <div className = "card-image">
+            <div className =  "col s12 m7">
             <img    
-                className = "responsive-img"
+                className = "responsive-image"
                 src = {`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
                 alt = {post.title}
                 onError = {i => (i.target.src = `${DefaultePost}`)}
-                style = {{height:"200px", width:"200px", objectFit:"cover"}}
+                style = {{height:"600px", width:"1000px", objectFit:"fill"}}
                 />
-            </div>
             {like ? (
                 <h4 
                     onClick = {this.likeToggle}>
@@ -128,9 +126,8 @@ class SinglePost extends Component {
                     {likes}
                 </h4>
             )} 
-            <div className="card-content">
+            <div style = {{height:"50px", width:"1000px", objectFit:"fill"}}>
                 <p>{post.body}</p>
-            <div className = "right">
                 <Link 
                     className="waves-effect waves-light btn-small right blue" 
                     to={`/`}> 
@@ -153,12 +150,9 @@ class SinglePost extends Component {
                     </Link>
                     </>
                 )}
-            </div>
-            </div>
-            <div className="card-action">
-                <span className="font-italic mark">
+                <span className="text-italic mark">
                         PostedBy <Link to={`/user/${postedId}`}>{postedName} </Link>
-                        on {new Date(post.created).toDateString()}
+                        on {new Date(post.created).toLocaleString()}
                 </span>
             </div>
             </div>
@@ -176,7 +170,7 @@ class SinglePost extends Component {
         }
         return (
             <div className = "container">
-                <h2 className = "center-card-title">{post.title}</h2>
+                <h2 className = "header">{post.title}</h2>
                 {!post ? ( <div className =  'center'>
                 <div className="preloader-wrapper big active">
                         <div className="spinner-layer spinner-blue">
@@ -221,7 +215,7 @@ class SinglePost extends Component {
                     </div></div> ) : ( 
                         this.renderPost(post)
                     )}
-                    <Comment 
+                    <Comment style = {{height:"600px", width:"1000px", objectFit:"fill"}} 
                         postId = {post._id} 
                         comments = {comments.reverse()} 
                         updateComments = {this.updateComments}       
