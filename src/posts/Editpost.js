@@ -25,9 +25,9 @@ class EditPost extends Component {
                 this.setState({ redirectToProfile: true })
             } else {
                 this.setState({ 
-                    id: data.postedBy._id,
-                    title: data.title,
-                    body: data.body,
+                    id: '',
+                    title: "",
+                    body: "",
                     error: ""
                 })
             }
@@ -88,40 +88,65 @@ class EditPost extends Component {
     }
 
     editPostForm = ( title, body ) => (
-        <form>
-        <div className = "from-group">
-            <label className = "text-muted"> Title </label>
-            <input 
-                type = "text" 
-                className = "from-control" 
-                onChange = {this.handleChange("title")}
-                value = {title}
-            />
-        </div>
-        <div className = "from-group">
-            <label className = "text-muted"> Body </label>
-            <input 
-                type = "text" 
-                className = "from-control" 
-                onChange = {this.handleChange("body")}
-                value = {body}
-            />
-        </div>
-        <div className="form-group">
-            <label className="text-muted">Photo</label>
-                <input
-                    onChange={this.handleChange("photo")}
-                    type="file"
-                    accept="image/*"
-                    className="form-control"
-                />
+        <div className ="row">
+        <form className="col s12">
+        <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input 
+                                type = "text" 
+                                className = " from-control" 
+                                onChange = {this.handleChange("title")}
+                                value = {title}
+                            />
+                            <label for="Title">Title</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input 
+                                type = "text" 
+                                className = "from-control" 
+                                onChange = {this.handleChange("body")}
+                                value = {body}
+                            />
+                            <label for="text">Body</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class = "row">
+            <label>Post</label>
+            <div class = "file-field input-field">
+                <div class = "btn btn-raised btn-primary blue left">
+                    <span>upload</span>
+                    <input
+                        onChange={this.handleChange("photo")}
+                        type="file"
+                        accept="image/*"
+                    />
+                </div>
+                <div class = "file-path-wrapper">
+                    <input class = "file-path validate" type = "text"
+                        placeholder = "Add your file" />
+                </div>
+            </div>
         </div>
         <button 
             onClick = {this.clickToSubmit} 
-            className = "btn btn-raised btn-primary" >
-            Update Post 
+            className = "btn btn-raised btn-primary blue right">
+            Update
+            <i class="material-icons right">
+            update
+            </i> 
         </button>
     </form>
+    </div>
     )
 
     render() {
@@ -130,11 +155,11 @@ class EditPost extends Component {
             return <Redirect to = {`/user/${isAuthenticated().user._id}`} />
         }
         return(
-            <div>
+            <div className = "container">
             <h2>{title}</h2>
             <div 
-                    className = "alert data-error"
-                    style = {{display : error ? "" : "none"}}>
+                className = "alert data-error"
+                style = {{display : error ? "" : "none"}}>
                 {error}
                 </div>
                 {loading ? (<div className =  'center'>
@@ -184,8 +209,8 @@ class EditPost extends Component {
                 src = {`${process.env.REACT_APP_API_URL}/post/photo/${id}}`}
                 onError = {i => (i.target.src = `${DefaultePost}`)}
                 alt = {title} 
-                style = {{height: "200px", width: 'auto'}}
-                className = "img-thumbnali"
+                style = {{height: "200px", width: 'auto', borderColor:"black"}}
+                className = "image"
             />
             {this.editPostForm(title, body)}
             </div>

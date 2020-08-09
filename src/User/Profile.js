@@ -103,15 +103,6 @@ class Profile extends Component {
                     </div>
                     <div>
                         <h4> {user.name} </h4>
-                        {isAuthenticated().user && isAuthenticated().user._id === user._id && (
-                            
-                                <Link
-                                    style={{margin:"10px 5px 100px 230px"}}
-                                    to={`/user/edit/${this.state.user._id}`}>
-                                    <i class="material-icons">create</i>
-                                </Link>
-    
-                            )}
                         <div style = {{display:"flex",justifyContent:"space-between",width:"108%"}}>
                             <h6> {posts.length} posts </h6>
                             <h6> {user.followers.length} followers </h6>
@@ -126,6 +117,11 @@ class Profile extends Component {
                     <p>{user.about}</p>
                 {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
                 <div className="col s10 flow-text" >
+                    <Link
+                        className="waves-effect waves-light btn-small #0d47a1 white darken-4 left"
+                        to={`/user/edit/${this.state.user._id}`}>
+                        <i class="material-icons">create</i>
+                    </Link>
                     <Link
                         className="waves-effect waves-light btn-small #0d47a1 white darken-4 left"
                         to={`/post/create`} >

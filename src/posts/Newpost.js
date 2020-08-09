@@ -88,24 +88,24 @@ class Newpost extends Component {
                     </div>
                 </div>
                 <div class="row">
-                            <div class="col s12">
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                    <input 
-                                        type = "text" 
-                                        className = "from-control" 
-                                        onChange = {this.handleChange("body")}
-                                        value = {body}
-                                    />
-                                    <label for="text">Body</label>
-                                    </div>
-                                </div>
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input 
+                                type = "text" 
+                                className = "from-control" 
+                                onChange = {this.handleChange("body")}
+                                value = {body}
+                            />
+                            <label for="text">Body</label>
                             </div>
                         </div>
+                    </div>
+                </div>
                         <div class = "row">
                             <label>Post</label>
                             <div class = "file-field input-field">
-                                <div class = "btn">
+                                <div class = "btn btn-raised btn-primary blue left">
                                     <span>upload</span>
                                     <input
                                         onChange={this.handleChange("photo")}
@@ -122,7 +122,7 @@ class Newpost extends Component {
                         </div>
                 <button 
                     onClick = {this.clickToSubmit} 
-                    className = "btn waves-effect waves-light right" >
+                    className = "btn waves-effect waves-light blue right" >
                     CreatePost<i class="material-icons right">file_upload</i>
                 </button>
             </form>
@@ -144,9 +144,48 @@ class Newpost extends Component {
                 {error}
                 </div>
                 {loading ? 
-                    (<div className = "jumbotron text-center">
-                        <h2> loading...</h2>
-                    </div>
+                    (<div className =  'center'>
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+
+                        <div class="spinner-layer spinner-red">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+
+                        <div class="spinner-layer spinner-yellow">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+
+                        <div class="spinner-layer spinner-green">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div> : </div>
                     ):(
                     ""
                 )}

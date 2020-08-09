@@ -31,9 +31,9 @@ class  EditProfile extends Component {
             } else {
                 this.setState({ 
                     id: data._id,
-                    name: data.name,
-                    email: data.email,
-                    about: data.about,
+                    name: "",
+                    email: "",
+                    about: "",
                     error: ""
                 })
             }
@@ -94,58 +94,96 @@ class  EditProfile extends Component {
     }
 
     EditForm = ( name, email, password, about) => (
-        <form>
-        <div className="file-field input-field">
-            <div className="btn">
-                <span>Photo</span>
-                <input
-                    onChange={this.handleChange("photo")}
-                    type="file"
-                    accept="image/*"
-                />
+        <div class="row">
+        <form class="col s12">
+        <div class = "row">
+            <label>Post</label>
+            <div class = "file-field input-field">
+                <div class = "btn btn-raised btn-primary blue left">
+                    <span>upload</span>
+                    <input
+                        onChange={this.handleChange("photo")}
+                        type="file"
+                        accept="image/*"
+                    />
+                </div>
+                <div class = "file-path-wrapper">
+                    <input class = "file-path validate" type = "text"
+                        placeholder = "Add your file" />
+                </div>
             </div>
-            <div className="file-path-wrapper">
-                <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
+        </div>
+        <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input 
+                                type = "text" 
+                                className = " from-control" 
+                                onChange = {this.handleChange("name")}
+                                value = {name}
+                            />
+                            <label for="name">Name</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input 
+                        type = "email" 
+                        className = " from-control" 
+                        onChange = {this.handleChange("email")}
+                        value = {email}
+                    />
+                    <label for="Title">email</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div className = "from-group">
-            <label className = "text-muted"> Name </label>
-            <input 
-                type = "text" 
-                className = "from-control" 
-                onChange = {this.handleChange("name")}
-                value = {name}
-            />
+
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input 
+                        type = "text" 
+                        className = "from-control" 
+                        onChange = {this.handleChange("about")}
+                        value = {about}
+                    />
+                    <label for="text">About</label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className = "from-group">
-            <label className = "text-muted"> Email </label>
-            <input 
-                type = "text" 
-                className = "from-control" 
-                onChange = {this.handleChange("email")}
-                value = {email}
-            />
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input 
+                        type = "password" 
+                        className = "from-control" 
+                        onChange = {this.handleChange("password")}
+                        value = {password}
+                    />
+                    <label for="text">Password</label>
+                    </div>
+                    <button 
+                        onClick = {this.clickToSubmit} 
+                        className = "btn btn-raised btn-primary blue right">
+                        Update
+                        <i class="material-icons right">
+                        update
+                        </i> 
+                    </button>
+                </div>
+            </div>
         </div>
-                <div className = "from-area">
-            <label className = "text-muted"> About </label>
-            <textarea 
-                type = "text" 
-                className = "from-control" 
-                onChange = {this.handleChange("about")}
-                value = {about}
-            />
-        </div>
-        <div className = "from-group">
-            <label className = "text-muted"> Password </label>
-            <input 
-                type = "password" 
-                className = "from-control" 
-                onChange = {this.handleChange("password")}
-                value = {password}
-            />
-        </div>
-        <button onClick = {this.clickToSubmit} className = "btn btn-raised btn-primary" > Update </button>
     </form>
+    </div>
     )
 
     render() {
@@ -212,7 +250,7 @@ class  EditProfile extends Component {
                     onError = {i => (i.target.src = `${DefaultImage}`)}
                     alt = {name} 
                     style = {{height: "200px", width: 'auto'}}
-                    className = "img-thumbnali"
+                    className = "image"
                     />
                 {this.EditForm( name, email, password, about)}
             </div>

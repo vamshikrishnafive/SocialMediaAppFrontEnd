@@ -11,23 +11,30 @@ const isActive = (history, path) => {
 const Menu = ({ history }) => (
     <div className="navbar-fixed">
         <nav>
-            <div className="nav-wrapper">
-                <Link className="brand-logo blue-black" style={isActive(history, '/')} to="/">  instagram </Link> 
+            <div className="nav-wrapper white">
+                <Link className="brand-logo blue-black" style={isActive(history, '/')} to="/"> instagram </Link> 
                 <ul className="right hide-on-med-and-down">
-                    <li className="nav-item  blue-black"><Link style={isActive(history, '/users')} to="/Users"> Users </Link></li>
+                    <li 
+                        className="nav-item  blue-black">
+                        <Link 
+                            style={isActive(history, '/users')} 
+                            to="/Users"> 
+                            <i class="material-icons">person</i>
+                        </Link>
+                    </li>
                     <li 
                         className="nav-item">
                         <Link
                             to={`/post/create`}
                             className="nav-link blue-black"
                             style={isActive(history, `/post/create`)}>
-                            New Post
+                            <i class="material-icons">fiber_new</i>
                         </Link>
                     </li>
                     {!isAuthenticated() && (
                         <>
-                            <li className="nav-item blue-black"><Link style={isActive(history, '/signin')} to="/signin"> Sign In </Link></li>
-                            <li className="nav-item"><Link style={isActive(history, '/signup')} to="/signup"> Sign Up </Link></li>
+                            <li className="nav-item blue-black"><Link style={isActive(history, '/signin')} to="/signin"><i class="material-icons">mood</i></Link></li>
+                            <li className="nav-item"><Link style={isActive(history, '/signup')} to="/signup"><i class="material-icons">person_add</i></Link></li>
                         </>
                     )}
                     {isAuthenticated() && (
@@ -36,14 +43,14 @@ const Menu = ({ history }) => (
                                 <Link
                                     to={`/findpeople`}
                                     style={isActive(history, `/findpeople`)}>
-                                    FindPeople
+                                    <i class="material-icons">near_me</i>
                                 </Link>
                             </li>
                             <li className="nav-item blue-black">
                                 <Link
                                     to={`/user/${isAuthenticated().user._id}`}
                                     style={isActive(history, `/user/${isAuthenticated().user._id}`)}>
-                                    {`${isAuthenticated().user.name}'s Profile`}
+                                    {`${isAuthenticated().user.name}`}
                                 </Link>
                             </li>
                             <li className="nav-item blue-black ">
@@ -54,7 +61,7 @@ const Menu = ({ history }) => (
                                             history.push('/')
                                             )}
                                 > 
-                                Sign out 
+                                <i class="material-icons">mood_bad</i>
                                 </Link>
                             </li>
                         </>
