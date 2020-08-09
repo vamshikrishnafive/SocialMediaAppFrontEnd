@@ -5,9 +5,12 @@ import DefaultImage from '../images/download.png'
 
 class ProfileTabs extends Component {
     render() {
-        const { followers, following, posts } = this.props
-        return(
-        <div className = "row">
+        
+    const { followers, following, posts } = this.props
+    
+    return(
+        <div className = "container" style = {{marginLeft:"350px"}}>
+
         <div className = "col s2 m3" id = "Followers">
             <h3 className = "iteam"> Followers </h3>
             {followers.map((person, i) => (

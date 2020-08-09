@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
+import M from "materialize-css"
 
 import { isAuthenticated } from "../auth"
 import { comment, uncomment } from "./api.post";
@@ -43,10 +44,11 @@ class Comment extends Component {
             
             comment(userId, token, postId, {text: this.state.text}).then(data => {
                 if(data.error) {
-                    console.log(data.error)
+                    M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
                 } else {
                     this.setState({text: "" });
                     this.props.updateComments(data.comments)
+                    M.toast({html: "Done", classes:"#66bb6a green lighten-1"})
                 }
             }) 
         }
@@ -58,9 +60,10 @@ class Comment extends Component {
         
         uncomment(userId, token, postId, comment).then(data => {
             if (data.error) {
-                console.log(data.error);
+                M.toast({html: data.error, classes:"#66bb6a green lighten-1"})
             } else {
                 this.props.updateComments(data.comments);
+                M.toast({html: "Deleted", classes:"#66bb6a blue lighten-1"})
             }
         });
     };
@@ -102,7 +105,7 @@ class Comment extends Component {
                     </div>
                 </form>
                 <div
-                    className="alert alert-danger"
+                    className="valign-wrapper"
                     style={{ display: error ? "" : "none" }}>
                     {error}
                 </div>

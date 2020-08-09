@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import M from "materialize-css"
+
 import { findPeople, follow } from "./api.user";
 import DefaultProfile from "../images/download.png";
 import { Link } from "react-router-dom";
@@ -20,7 +22,7 @@ class FindPeople extends Component {
 
         findPeople(userId, token).then(data => {
             if (data.error) {
-                console.log(data.error);
+                M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
             } else {
                 this.setState({ users: data });
             }
@@ -40,8 +42,9 @@ class FindPeople extends Component {
                 this.setState({
                     users: toFollow,
                     open: true,
-                    followMessage: `Following ${user.name}`
                 });
+                M.toast({html: `Following ${user.name}`, classes:"#66bb6a green lighten-1"})
+
             }
         });
     };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import M from "materialize-css"
 
 import { isAuthenticated } from '../auth';
 import { read, update, updateUser } from './api.user';
@@ -85,9 +86,11 @@ class  EditProfile extends Component {
 
             update(userId, token, this.userData)
                 .then(data => {
-                    if (data.error) this.setState({ error: data.error })
+                    if (data.error) {M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
+                }
                     else updateUser(data,() => { 
                         this.setState({ redirectToProfile: true }) 
+                        M.toast({html: "Sucessfully Updated", classes:"#66bb6a green lighten-1"})
                         })
                 })
         }

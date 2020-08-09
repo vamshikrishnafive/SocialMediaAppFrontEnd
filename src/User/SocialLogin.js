@@ -20,9 +20,7 @@ class SocialLogin extends Component {
             email: email,
             imageUrl: imageUrl
         };
-        // console.log("user obj to social login: ", user);
         socialLogin(user).then(data => {
-            console.log("signin data: ", data);
             if (data.error) {
                 console.log("Error Login. Please try again..");
             } else {
@@ -39,7 +37,7 @@ class SocialLogin extends Component {
             return <Redirect to="/" />;
         }
         return(
-            <div className="container center">
+            <div className="container">
                 <GoogleLogin
                     clientId="562567583254-b3jofpa3hsavf1kitu2in0460k1qq4s4.apps.googleusercontent.com"
                     buttonText="Login with Google"

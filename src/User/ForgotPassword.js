@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import M from "materialize-css"
 
 import { forgotPassword } from "../auth/index";
 
@@ -22,7 +23,7 @@ class ForgotPassword extends Component {
         
         forgotPassword(this.state.email).then(data => {
             if(data.error) {
-                console.log(data.error)
+                M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
                 this.setState({error: data.error})
             } else {
                 console.log(data.messag);

@@ -135,6 +135,7 @@ class Profile extends Component {
                 following={this.state.following}
                 onButtonclick={this.clickFollowButton}
                 />
+                
                 )}
                 </div>
             </div>

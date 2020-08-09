@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
+import M from "materialize-css"
 
 import { signin, authenticate } from "../auth"
 import SocialLogin from "./SocialLogin";
@@ -10,15 +11,13 @@ class Signin extends Component {
         this.state = {
             email: "",
             password: "",
-            error: "",
             redirectToReferer: false,
             loading: false
         }
     }
 
     handleChange = name => event => {
-        this.setState({ error: "" })
-        this.setState({ [name]: event.target.value })
+        this.setState({ [name]: event.target.value, loading:false})
     }
 
     clickToSubmit = event => {
@@ -31,37 +30,45 @@ class Signin extends Component {
         }
         signin(user)
             .then(data => {
-                if (data.error) this.setState({ error: data.error, loading: false })
+                if (data.error) { M.toast({html: data.error, classes:"#ef5350 red lighten-1"}) }
                 else {
-                    authenticate(data, () => {
-                        this.setState({ redirectToReferer: true })
-                    })
+                authenticate(data, () => {
+                    this.setState({ redirectToReferer: true })
+                    M.toast({html: "Sucessfully Logined", classes:"#66bb6a green lighten-1"})
+                })
                 }
             })
     }
 
     SigninForm = (email, password,) => (
-        <form>
-            <div className="from-group">
-                <label className="text-muted"> email </label>
+        <div className = "myCard">
+            <div className="card auth-card input-field">
+                <h1> Instagram </h1>    
                 <input
                     type="text"
-                    className="from-control"
+                    className = "from-control" 
                     onChange={this.handleChange("email")}
                     value={email}
+                    placeholder = "Email"
                 />
-            </div>
-            <div className="from-group">
-                <label className="text-muted"> password </label>
+                
                 <input
                     type="password"
-                    className="from-control"
                     onChange={this.handleChange("password")}
                     value={password}
+                    placeholder = "password"
                 />
+                <button onClick={this.clickToSubmit} className="btn waves-effect waves-light #1e88e5 blue darken-1" >Submit </button>
+                <SocialLogin />
+                {this.state.loading ? (<p>
+                    <Link to='/forgotpassword' className="btn float-right center">
+                        {" "}
+                        forgotPassword
+                    </Link>
+                </p>) : (" ")}
+                <h5><Link to = "/signup">Create Account..!</Link></h5>         
             </div>
-            <button onClick={this.clickToSubmit} className="btn btn-raised btn-primary" >Submit </button>
-        </form>
+        </div>
     )
 
     render() {
@@ -72,14 +79,11 @@ class Signin extends Component {
         }
         return (
             <div className="container">
-                <h2 className="mt-5 mb-5"> Signin </h2>
                 <div
                     className="alert alert-danger"
                     style={{ display: error ? "" : "none" }}>
                     {error}
                 </div>
-                <SocialLogin />
-                <hr />
                 {loading ? <div className =  'center'>
                     <div class="preloader-wrapper big active">
                         <div class="spinner-layer spinner-blue">
@@ -124,12 +128,6 @@ class Signin extends Component {
                     </div></div> : ""}
 
                 {this.SigninForm(email, password,)}
-                <p>
-                    <Link to='/forgotpassword' className="btn float-right">
-                        {" "}
-                        forgotPassword
-                    </Link>
-                </p>
             </div>
         )
     }

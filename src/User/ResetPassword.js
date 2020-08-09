@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import M from "materialize-css"
 
 import { resetPassword } from "../auth/index";
 
@@ -29,10 +30,10 @@ class ResetPassword extends Component {
             resetPasswordLink: this.props.match.params.resetPasswordToken
         }).then(data => {
             if(data.error) {
-                console.log(data.error)
+                M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
                 this.setState({error: data.error, newPassword: ""})
             } else {
-                console.log(data.message)
+                M.toast({html: data.message, classes:"#ef5350 red lighten-1"})
                 this.setState({message: data.message, newPassword: ""})
             }
         })
@@ -44,12 +45,7 @@ class ResetPassword extends Component {
         <div className = "container"> 
             <div className = "row">
                 <h2 className = "header">Reset Your Password</h2>
-                {error 
-                    ? 
-                    (<h4 classNam = "warning">{error}</h4>) 
-                    : 
-                    (<h4 className = 'message'>{message}</h4>)
-                }
+                
                 <form className="col s12">
                     <div className="row">
                         <div className="col s12">

@@ -12,7 +12,7 @@ const Menu = ({ history }) => (
     <div className="navbar-fixed">
         <nav>
             <div className="nav-wrapper white">
-                <Link className="brand-logo blue-black" style={isActive(history, '/')} to="/"> instagram </Link> 
+                <Link className="brand-logo blue-black" style={isActive(history, '/')} to="/"> Instagram </Link> 
                 <ul className="right hide-on-med-and-down">
                     <li 
                         className="nav-item  blue-black">

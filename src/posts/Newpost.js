@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import M from "materialize-css"
 
 import { isAuthenticated } from '../auth';
 import { create } from './api.post';
@@ -26,9 +27,9 @@ class Newpost extends Component {
 
     isValid = () => {
         const { title, body, fileSize} = this.state
-        if(fileSize > 100000){
+        if(fileSize > 1000000){
             this.setState({
-                error:"File size shoulde less than 100kb"
+                error:"File size shoulde less than 1000kb"
             })
             return false
         }
@@ -42,7 +43,6 @@ class Newpost extends Component {
     }
 
     handleChange = name => event => {
-        this.setState({error: ""})
         const value = name === "photo" ? event.target.files[0] : event.target.value
         const fileSize = name === "photo" ? event.target.files[0].size : 0
         this.postData.set(name, value)
@@ -56,15 +56,16 @@ class Newpost extends Component {
             const userId = isAuthenticated().user._id
             const token = isAuthenticated().token
             create(userId, token, this.postData).then(data => {
-                if (data.error) this.setState({ 
-                    error: data.error 
-                })
+                if (data.error) { 
+                    M.toast({html: data.error, classes:"#ef5350 red lighten-1"}) 
+                }
                 else this.setState({
                     loading: false,
                     title: "",
                     body: "",
                     redirectToProfile: true
-                });
+                })
+                M.toast({html: "Sucessfully Created", classes:"#66bb6a green lighten-1"})
             })
         }
     }
@@ -139,7 +140,7 @@ class Newpost extends Component {
             <div className = "container">
                 <h2> Create a New Post </h2>
                 <div 
-                    className = "alert alert-danger"
+                    className = "btn red"
                     style = {{display : error ? "" : "none"}}>
                 {error}
                 </div>

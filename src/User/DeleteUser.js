@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import M from "materialize-css"
+
 import { isAuthenticated, signout } from '../auth'
 import { remove } from './api.user'
 import { Redirect } from 'react-router-dom'
@@ -6,7 +8,8 @@ import { Redirect } from 'react-router-dom'
 class DeleteUser extends Component {
 
     state = {
-        redirect:false
+        redirect:false,
+        posts: ""
     }
 
     deleteAccout = () => {
@@ -14,11 +17,11 @@ class DeleteUser extends Component {
         const userId = this.props.userId
         remove(userId, token).then(data => {
             if (data.error) {
-                console.log(data.error)
+                M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
             } else {
                 signout(() => console.log('deleted..'))
-                this.setState({redirect:true})
-                
+                this.setState({redirect:true, posts: ""})
+                M.toast({html: "Sucessfully Removed", classes:"#66bb6a green lighten-1"})
             }
         })
     }

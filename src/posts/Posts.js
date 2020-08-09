@@ -56,7 +56,7 @@ class Posts extends Component {
                             {post.title}
                         </span>
                             <Link to={`/post/${post._id}`}>
-                            <p class="card-body">{post.body.substr(0,100)} ...read More</p>
+                            <p class="card-body">{post.body.substr(0,75)} ...read More</p>
                             </Link>
                             <h6>{post.likes.length} likes</h6>
                             <h6>{post.comments.length} comments</h6>
@@ -70,7 +70,7 @@ class Posts extends Component {
     render() {
         const { posts } = this.state
         return (
-            <div className="container">
+            <div className="gallery">
                 <h2 className=" mt-5 mb-5">
                 {!posts.length ? <div className = 'center'>
                     <div class="preloader-wrapper big active">
