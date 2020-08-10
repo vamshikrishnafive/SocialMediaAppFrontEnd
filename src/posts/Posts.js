@@ -72,7 +72,7 @@ class Posts extends Component {
         return (
             <div className="gallery">
                 <h2 className=" mt-5 mb-5">
-                {!posts.length ? <div className = 'center'>
+                {!posts.length ? <div className = "center">
                     <div class="preloader-wrapper big active">
                         <div class="spinner-layer spinner-blue">
                             <div class="circle-clipper left">
