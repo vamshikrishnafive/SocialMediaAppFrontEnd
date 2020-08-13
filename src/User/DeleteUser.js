@@ -26,7 +26,7 @@ class DeleteUser extends Component {
         })
     }
 
-    deleteComfirmed = () => {
+    deleteConfirmed = () => {
         let anwser = window.confirm('Are you Sure')
         if(anwser){
             this.deleteAccout()
@@ -39,11 +39,13 @@ class DeleteUser extends Component {
             return <Redirect to="/" />
         }
         return (
-            <button 
-                className="waves-effect waves-light btn-small #0d47a1 black darken-4 left" 
-                onClick = {this.deleteComfirmed} 
-                > <i class="material-icons">delete_sweep</i> </button>
-        )
+            <button
+                onClick={this.deleteConfirmed}
+                className="btn btn-raised btn-danger"
+            >
+                Delete Profile
+            </button>        
+            )
     }
 }
 

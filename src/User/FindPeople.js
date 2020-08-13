@@ -51,42 +51,47 @@ class FindPeople extends Component {
 
     renderUsers = users => (
         <div className="row">
-            {users.map((user, i) => (
-                <div className="card col s1 m4" key={i}>
-                    <img
-                        src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
-                        alt={user.name}
-                        onError={i => (i.target.src = `${DefaultProfile}`)}
-                        style={{ height: "200px", width: "auto" }}
-                        className="center circle responsive-img" 
-                    />
-                        <span><h4 className="card-title">{user.name}</h4></span>
-                        <p>{user.email}</p>
-                        <div className = "left card-action">
-                        <Link
-                            to={`/user/${user._id}`}
-                            className="btn float-leftwaves-effect waves-light btn-small blue">
-                            View Profile
-                        </Link>
-                        <button
-                            onClick={() => this.clickFollow(user, i)}
-                            className="btn waves-effect waves-light btn-small red">
-                            Follow
-                        </button>
-                    </div>
+        {users.map((user, i) => (
+            <div className="card col-md-4" key={i}>
+                <img
+                    style={{ height: "200px", width: "auto" }}
+                    className="img-thumbnail"
+                    src={`${process.env.REACT_APP_API_URL}/user/photo/${
+                        user._id
+                    }`}
+                    onError={i => (i.target.src = `${DefaultProfile}`)}
+                    alt={user.name}
+                />
+                <div className="card-body">
+                    <h5 className="card-title">{user.name}</h5>
+                    <p className="card-text">{user.email}</p>
+                    <Link
+                        to={`/user/${user._id}`}
+                        className="btn btn-raised btn-primary btn-sm"
+                    >
+                        View Profile
+                    </Link>
+
+                    <button
+                        onClick={() => this.clickFollow(user, i)}
+                        className="btn btn-raised btn-info float-right btn-sm"
+                    >
+                        Follow
+                    </button>
                 </div>
-            ))}
-        </div>
+            </div>
+        ))}
+    </div>
     );
 
     render() {
         const { users, open, followMessage } = this.state;
         return (
-            <div className="row">
-                <h2 className="col s12">Suggested for you</h2>
+            <div className="container">
+                <h2 className="mt-5 mb-5">Find People</h2>
 
                 {open && (
-                    <div className="flow-text">{followMessage}</div>
+                    <div className="alert alert-success">{followMessage}</div>
                 )}
 
                 {this.renderUsers(users)}

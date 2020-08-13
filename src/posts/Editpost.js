@@ -44,7 +44,7 @@ class EditPost extends Component {
         const { title, body, fileSize} = this.state
         if(fileSize > 100000){
             this.setState({
-                error:"File size shoulde less than 100kb"
+                error:"File size shoulde less than 1000kb"
             })
             return false
         }
@@ -65,7 +65,8 @@ class EditPost extends Component {
         this.setState({ [name]: value, fileSize })
     }
     
-    clickToSubmit = event => {
+    clickSubmit
+     = event => {
         event.preventDefault()
         this.setState({loading:true})
         const { title, body } = this.state
@@ -88,65 +89,43 @@ class EditPost extends Component {
     }
 
     editPostForm = ( title, body ) => (
-        <div className ="row">
-        <form className="col s12">
-        <div class="row">
-                    <div class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input 
-                                type = "text" 
-                                className = " from-control" 
-                                onChange = {this.handleChange("title")}
-                                value = {title}
-                            />
-                            <label for="Title">Title</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        <div class="row">
-                    <div class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input 
-                                type = "text" 
-                                className = "from-control" 
-                                onChange = {this.handleChange("body")}
-                                value = {body}
-                            />
-                            <label for="text">Body</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        <div class = "row">
-            <label>Post</label>
-            <div class = "file-field input-field">
-                <div class = "btn btn-raised btn-primary blue left">
-                    <span>upload</span>
-                    <input
-                        onChange={this.handleChange("photo")}
-                        type="file"
-                        accept="image/*"
-                    />
-                </div>
-                <div class = "file-path-wrapper">
-                    <input class = "file-path validate" type = "text"
-                        placeholder = "Add your file" />
-                </div>
-            </div>
+        <form>
+        <div className="form-group">
+            <label className="text-muted">Post Photo</label>
+            <input
+                onChange={this.handleChange("photo")}
+                type="file"
+                accept="image/*"
+                className="form-control"
+            />
         </div>
-        <button 
-            onClick = {this.clickToSubmit} 
-            className = "btn btn-raised btn-primary blue right">
-            Update
-            <i class="material-icons right">
-            update
-            </i> 
+        <div className="form-group">
+            <label className="text-muted">Title</label>
+            <input
+                onChange={this.handleChange("title")}
+                type="text"
+                className="form-control"
+                value={title}
+            />
+        </div>
+
+        <div className="form-group">
+            <label className="text-muted">Body</label>
+            <textarea
+                onChange={this.handleChange("body")}
+                type="text"
+                className="form-control"
+                value={body}
+            />
+        </div>
+
+        <button
+            onClick={this.clickSubmit}
+            className="btn btn-raised btn-primary"
+        >
+            Update Post
         </button>
     </form>
-    </div>
     )
 
     render() {
@@ -157,61 +136,28 @@ class EditPost extends Component {
         return(
             <div className = "container">
             <h2>{title}</h2>
-            {loading ? (<div className =  'center'>
-                <div class="preloader-wrapper big active">
-                    <div class="spinner-layer spinner-blue">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-
-                    <div class="spinner-layer spinner-red">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-
-                    <div class="spinner-layer spinner-yellow">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-
-                    <div class="spinner-layer spinner-green">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div> : </div>):("")
-            }
-            <img 
-                src = {`${process.env.REACT_APP_API_URL}/post/photo/${id}}`}
-                onError = {i => (i.target.src = `${DefaultePost}`)}
-                alt = {title} 
-                style = {{height: "200px", width: 'auto', borderColor:"black"}}
-                className = "image"
-            />
-            <div 
-                className = "right-align"
-                style = {{display : error ? "" : "none"}}>
+            <div
+                className="alert alert-danger"
+                style={{ display: error ? "" : "none" }}
+            >
                 {error}
             </div>
+            {loading ? (
+                    <div className="jumbotron text-center">
+                        <h2>Loading...</h2>
+                    </div>
+                ) : (
+                    ""
+                )}
+            <img
+                    style={{ height: "200px", width: "auto" }}
+                    className="img-thumbnail"
+                    src={`${
+                        process.env.REACT_APP_API_URL
+                    }/post/photo/${id}?${new Date().getTime()}`}
+                    onError={i => (i.target.src = `${DefaultePost}`)}
+                    alt={title}
+                />
             {this.editPostForm(title, body)}
             
             </div>

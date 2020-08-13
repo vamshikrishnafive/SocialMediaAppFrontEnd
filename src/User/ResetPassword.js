@@ -42,36 +42,44 @@ class ResetPassword extends Component {
     render() {
         const { newPassword, message, error } = this.state
         return (
-        <div className = "container"> 
-            <div className = "row">
-                <h2 className = "header">Reset Your Password</h2>
-                
-                <form className="col s12">
-                    <div className="row">
-                        <div className="col s12">
-                            <div className="row">
-                                <div className="input-field col s12">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Enter your new password..>"
-                                    value={newPassword}    
-                                    onChange={this.handleChange}
-                                    autoFocus
-                                />
-                                <button 
-                                    className = "btn waves-effect waves-light right blue"
-                                    onClick = {this.resetPassword}
-                                >
-                                    Set 
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> 
+            <div className="container">
+            <h2 className="mt-5 mb-5">Reset your Password</h2>
+
+            {this.state.message && (
+                <h4 className="bg-success">{this.state.message}</h4>
+            )}
+            {this.state.error && (
+                <h4 className="bg-warning">{this.state.error}</h4>
+            )}
+
+            <form
+                style={{ display: this.state.message.length ? "none" : "" }}
+            >
+                <div className="form-group mt-5">
+                    <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Your new password"
+                        value={this.state.newPassword}
+                        name="newPassword"
+                        onChange={e =>
+                            this.setState({
+                                newPassword: e.target.value,
+                                message: "",
+                                error: ""
+                            })
+                        }
+                        autoFocus
+                    />
+                </div>
+                <button
+                    onClick={this.resetPassword}
+                    className="btn btn-raised btn-primary"
+                >
+                    Reset Password
+                </button>
+            </form>
+        </div>
         )
     }
 }

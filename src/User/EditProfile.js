@@ -76,7 +76,7 @@ class  EditProfile extends Component {
         this.setState({ [name]: value, fileSize })
     }
     
-    clickToSubmit = event => {
+    clickSubmit = event => {
         event.preventDefault()
         this.setState({loading:true})
         if (this.isValid()) {
@@ -96,97 +96,59 @@ class  EditProfile extends Component {
         }
     }
 
-    EditForm = ( name, email, password, about) => (
-        <div class="row">
-        <form class="col s12">
-        <div class = "row">
-            <label>Post</label>
-            <div class = "file-field input-field">
-                <div class = "btn btn-raised btn-primary blue left">
-                    <span>upload</span>
-                    <input
-                        onChange={this.handleChange("photo")}
-                        type="file"
-                        accept="image/*"
-                    />
-                </div>
-                <div class = "file-path-wrapper">
-                    <input class = "file-path validate" type = "text"
-                        placeholder = "Add your file" />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-                    <div class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input 
-                                type = "text" 
-                                className = " from-control" 
-                                onChange = {this.handleChange("name")}
-                                value = {name}
-                            />
-                            <label for="name">Name</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                    <input 
-                        type = "email" 
-                        className = " from-control" 
-                        onChange = {this.handleChange("email")}
-                        value = {email}
-                    />
-                    <label for="Title">email</label>
-                    </div>
-                </div>
-            </div>
-        </div>
+    signupForm = ( name, email, password, about) => (
+        <form>
+      <div className="form-group">
+        <label className="text-muted">Profile Photo</label>
+        <input
+          onChange={this.handleChange("photo")}
+          type="file"
+          accept="image/*"
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Name</label>
+        <input
+          onChange={this.handleChange("name")}
+          type="text"
+          className="form-control"
+          value={name}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Email</label>
+        <input
+          onChange={this.handleChange("email")}
+          type="email"
+          className="form-control"
+          value={email}
+        />
+      </div>
 
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                    <input 
-                        type = "text" 
-                        className = "from-control" 
-                        onChange = {this.handleChange("about")}
-                        value = {about}
-                    />
-                    <label for="text">About</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                    <input 
-                        type = "password" 
-                        className = "from-control" 
-                        onChange = {this.handleChange("password")}
-                        value = {password}
-                    />
-                    <label for="text">Password</label>
-                    </div>
-                    <button 
-                        onClick = {this.clickToSubmit} 
-                        className = "btn btn-raised btn-primary blue right">
-                        Update
-                        <i class="material-icons right">
-                        update
-                        </i> 
-                    </button>
-                </div>
-            </div>
-        </div>
+      <div className="form-group">
+        <label className="text-muted">About</label>
+        <textarea
+          onChange={this.handleChange("about")}
+          type="text"
+          className="form-control"
+          value={about}
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="text-muted">Password</label>
+        <input
+          onChange={this.handleChange("password")}
+          type="password"
+          className="form-control"
+          value={password}
+        />
+      </div>
+      <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
+        Update
+      </button>
     </form>
-    </div>
     )
 
     render() {
@@ -198,65 +160,37 @@ class  EditProfile extends Component {
         const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}`: DefaultImage;
 
         return (
-            <div className = "container">
-                <h2> EditProfile </h2>
-                <div 
-                    className = "alert data-error"
-                    style = {{display : error ? "" : "none"}}>
-                {error}
-                </div>
-                {loading ? (<div className =  'center'>
-                    <div class="preloader-wrapper big active">
-                        <div class="spinner-layer spinner-blue">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
+            <div className="container">
+        <h2 className="mt-5 mb-5">Edit Profile</h2>
+        <div
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
+        >
+          {error}
+        </div>
 
-                        <div class="spinner-layer spinner-red">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
+        {loading ? (
+          <div className="jumbotron text-center">
+            <h2>Loading...</h2>
+          </div>
+        ) : (
+          ""
+        )}
 
-                        <div class="spinner-layer spinner-yellow">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
+        <img
+          style={{ height: "200px", width: "auto" }}
+          className="img-thumbnail"
+          src={photoUrl}
+          onError={i => (i.target.src = `${DefaultImage}`)}
+          alt={name}
+        />
 
-                        <div class="spinner-layer spinner-green">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div> : </div>):("")
-                }
-                <img 
-                    src = {photoUrl}
-                    onError = {i => (i.target.src = `${DefaultImage}`)}
-                    alt = {name} 
-                    style = {{height: "200px", width: 'auto'}}
-                    className = "image"
-                    />
-                {this.EditForm( name, email, password, about)}
-            </div>
+        {isAuthenticated().user.role === "admin" &&
+          this.signupForm(name, email, password, about)}
+
+        {isAuthenticated().user._id === id &&
+          this.signupForm(name, email, password, about)}
+      </div>
         )
     }
 }

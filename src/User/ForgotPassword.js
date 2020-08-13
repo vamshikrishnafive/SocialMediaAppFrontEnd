@@ -35,41 +35,42 @@ class ForgotPassword extends Component {
     render() {
         const { email, message, error } = this.state
         return (
-        <div className = "container"> 
-            <div className = "row">
-                <h2 className = "header">Ask for Password Reset</h2>
-                {message && (
-                    <h4 className="message">{message}</h4>
-                )}
-                {error && (
-                    <h4 className="warning">{error}</h4>
-                )}
-                <form className="col s12">
-                    <div className="row">
-                        <div className="col s12">
-                            <div className="row">
-                                <div className="input-field col s12">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Your email address..>"
-                                    value={email}    
-                                    onChange={this.handleChange}
-                                    autoFocus
-                                />
-                                <button 
-                                    className = "btn waves-effect waves-light right blue"
-                                    onClick = {this.forgotPassword}
-                                >
-                                    send 
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> 
+            <div className="container">
+            <h2 className="mt-5 mb-5">Ask for Password Reset</h2>
+
+            {this.state.message && (
+                <h4 className="bg-success">{this.state.message}</h4>
+            )}
+            {this.state.error && (
+                <h4 className="bg-warning">{this.state.error}</h4>
+            )}
+
+            <form>
+                <div className="form-group mt-5">
+                    <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Your email address"
+                        value={this.state.email}
+                        name="email"
+                        onChange={e =>
+                            this.setState({
+                                email: e.target.value,
+                                message: "",
+                                error: ""
+                            })
+                        }
+                        autoFocus
+                    />
+                </div>
+                <button
+                    onClick={this.forgotPassword}
+                    className="btn btn-raised btn-primary"
+                >
+                    Send Password Rest Link
+                </button>
+            </form>
+        </div>
         )
     }
 }

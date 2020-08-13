@@ -14,20 +14,22 @@ class FollowProfileButton extends Component {
 
     render() {
         return(
-            <div className = "row">
-            {
-                !this.props.following ? (
-                    <button 
-                        className = "waves-effect waves-light btn-small #0d47a1 blue darken-4 mr-5"
-                        onClick = {this.followClick}
-                        >Follow</button>
+            <div className="d-inline-block">
+                {!this.props.following ? (
+                    <button
+                        onClick={this.followClick}
+                        className="btn btn-success btn-raised mr-5"
+                    >
+                        Follow
+                    </button>
                 ) : (
-                    <button 
-                        className = "waves-effect waves-light btn-small #0d47a1 blue darken-4 mr-5"
-                        onClick = {this.unfollowClick}
-                        >UnFollow</button>
-                )
-            }
+                    <button
+                        onClick={this.unfollowClick}
+                        className="btn btn-warning btn-raised"
+                    >
+                        UnFollow
+                    </button>
+                )}
             </div>
         )
     }

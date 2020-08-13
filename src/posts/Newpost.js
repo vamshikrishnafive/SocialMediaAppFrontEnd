@@ -49,7 +49,7 @@ class Newpost extends Component {
         this.setState({ [name]: value, fileSize })
     }
     
-    clickToSubmit = event => {
+    clickSubmit = event => {
         event.preventDefault()
         this.setState({loading:true})
         if (this.isValid()) {
@@ -71,63 +71,43 @@ class Newpost extends Component {
     }
 
     newPostForm = ( title, body ) => (
-        <div class="row">
-            <form class="col s12">
-                    <div class="row">
-                    <div class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input 
-                                type = "text" 
-                                className = " from-control" 
-                                onChange = {this.handleChange("title")}
-                                value = {title}
-                            />
-                            <label for="Title">Title</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                            <input 
-                                type = "text" 
-                                className = "from-control" 
-                                onChange = {this.handleChange("body")}
-                                value = {body}
-                            />
-                            <label for="text">Body</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                        <div class = "row">
-                            <label>Post</label>
-                            <div class = "file-field input-field">
-                                <div class = "btn btn-raised btn-primary blue left">
-                                    <span>upload</span>
-                                    <input
-                                        onChange={this.handleChange("photo")}
-                                        type="file"
-                                        accept="image/*"
-                                    />
-                                </div>
-                  
-                                <div class = "file-path-wrapper">
-                                    <input class = "file-path validate" type = "text"
-                                        placeholder = "Add your file" />
-                                </div>
-                            </div>
-                        </div>
-                <button 
-                    onClick = {this.clickToSubmit} 
-                    className = "btn waves-effect waves-light blue right" >
-                    CreatePost<i class="material-icons right">file_upload</i>
-                </button>
-            </form>
-        </div>
+        <form>
+            <div className="form-group">
+                <label className="text-muted">Post Photo</label>
+                <input
+                    onChange={this.handleChange("photo")}
+                    type="file"
+                    accept="image/*"
+                    className="form-control"
+                />
+            </div>
+            <div className="form-group">
+                <label className="text-muted">Title</label>
+                <input
+                    onChange={this.handleChange("title")}
+                    type="text"
+                    className="form-control"
+                    value={title}
+                />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Body</label>
+                <textarea
+                    onChange={this.handleChange("body")}
+                    type="text"
+                    className="form-control"
+                    value={body}
+                />
+            </div>
+
+            <button
+                onClick={this.clickSubmit}
+                className="btn btn-raised btn-primary"
+            >
+                Create Post
+            </button>
+        </form>
     )
 
     render() {
@@ -137,61 +117,25 @@ class Newpost extends Component {
         }
 
         return (
-            <div className = "container">
-                <h2> Create a New Post </h2>
-                <div 
-                    className = "btn red"
-                    style = {{display : error ? "" : "none"}}>
+            <div className="container">
+            <h2 className="mt-5 mb-5">Create a new post</h2>
+            <div
+                className="alert alert-danger"
+                style={{ display: error ? "" : "none" }}
+            >
                 {error}
-                </div>
-                {loading ? 
-                    (<div className =  'center'>
-                    <div class="preloader-wrapper big active">
-                        <div class="spinner-layer spinner-blue">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-
-                        <div class="spinner-layer spinner-red">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-
-                        <div class="spinner-layer spinner-yellow">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-
-                        <div class="spinner-layer spinner-green">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div> : </div>
-                    ):(
-                    ""
-                )}
-                {this.newPostForm(title, body)}
             </div>
+
+            {loading ? (
+                <div className="jumbotron text-center">
+                    <h2>Loading...</h2>
+                </div>
+            ) : (
+                ""
+            )}
+
+            {this.newPostForm(title, body)}
+        </div>
         )
     }
 }

@@ -67,55 +67,89 @@ class Posts extends Component {
         </div>
     )
 
-    render() {
+    renderPosts() {
         const { posts } = this.state
         return (
-            <div className="gallery">
-                <h2 className=" mt-5 mb-5">
-                {!posts.length ? <div className = "center">
-                    <div class="preloader-wrapper big active">
-                        <div class="spinner-layer spinner-blue">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
+            <div className="row">
+                {posts.map((post, i) => {
+                    const posterId = post.postedBy
+                        ? `/user/${post.postedBy._id}`
+                        : "";
+                    const posterName = post.postedBy
+                        ? post.postedBy.name
+                        : " Unknown";
 
-                        <div class="spinner-layer spinner-red">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
+                    return (
+                        <div className="card col-md-4" key={i}>
+                            <div className="card-body">
+                                <img
+                                    src={`${
+                                        process.env.REACT_APP_API_URL
+                                    }/post/photo/${post._id}`}
+                                    alt={post.title}
+                                    onError={i =>
+                                        (i.target.src = `${DefaultePost}`)
+                                    }
+                                    className="img-thunbnail mb-3"
+                                    style={{ height: "200px", width: "100%" }}
+                                />
+                                <h5 className="card-title">{post.title}</h5>
+                                <p className="card-text">
+                                    {post.body.substring(0, 100)}
+                                </p>
+                                <br />
+                                <p className="font-italic mark">
+                                    Posted by{" "}
+                                    <Link to={`${posterId}`}>
+                                        {posterName}{" "}
+                                    </Link>
+                                    on {new Date(post.created).toDateString()}
+                                </p>
+                                <Link
+                                    to={`/post/${post._id}`}
+                                    className="btn btn-raised btn-primary btn-sm"
+                                >
+                                    Read more
+                                </Link>
                             </div>
                         </div>
+                    );
+                })}
+            </div>
+        );
+    };
 
-                        <div class="spinner-layer spinner-yellow">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-
-                        <div class="spinner-layer spinner-green">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div></div> : " "}
+    render() {
+        const { posts, page } = this.state;
+        return (
+            <div className="container">
+                <h2 className="mt-5 mb-5">
+                    {!posts.length ? "No more posts!" : "Recent Posts"}
                 </h2>
-                {this.renderPost(posts)}
+
+                {this.renderPosts(posts)}
+
+                {page > 1 ? (
+                    <button
+                        className="btn btn-raised btn-warning mr-5 mt-5 mb-5"
+                        onClick={() => this.loadLess(1)}
+                    >
+                        Previous ({this.state.page - 1})
+                    </button>
+                ) : (
+                    ""
+                )}
+
+                {posts.length ? (
+                    <button
+                        className="btn btn-raised btn-success mt-5 mb-5"
+                        onClick={() => this.loadMore(1)}
+                    >
+                        Next ({page + 1})
+                    </button>
+                ) : (
+                    ""
+                )}
             </div>
         )
     }

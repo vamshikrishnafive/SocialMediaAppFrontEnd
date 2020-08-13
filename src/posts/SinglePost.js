@@ -98,65 +98,80 @@ class SinglePost extends Component {
 
         const { like, likes } = this.state 
         return (
-            <div className="row">
-            <div className =  "col s12 m7">
-            <img    
-                className = "responsive-image"
-                src = {`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
-                alt = {post.title}
-                onError = {i => (i.target.src = `${DefaultePost}`)}
-                style = {{height:"600px", width:"1000px", objectFit:"fill"}}
-                />
+            <div className="card-body">
+            <img
+                src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
+                alt={post.title}
+                onError={i => (i.target.src = `${DefaultePost}`)}
+                className="img-thunbnail mb-3"
+                style={{
+                    height: '300px',
+                    width: '100%',
+                    objectFit: 'cover'
+                }}
+            />
+
             {like ? (
-                <h4 
-                    onClick = {this.likeToggle}>
-                    <i 
-                        className="material-icons"
-                        style={{padding:"10px",borderRadius:"50%", color: "red"}}
-                        >favorite</i>{" "}
-                    {likes}
-                </h4>
+                <h3 onClick={this.likeToggle}>
+                    <i
+                        className="fa fa-thumbs-up text-success bg-dark"
+                        style={{ padding: '10px', borderRadius: '50%' }}
+                    />{' '}
+                    {likes} Like
+                </h3>
             ) : (
-                <h4 
-                    onClick = {this.likeToggle}>
-                    <i 
-                        className="material-icons"
-                        style={{padding:"10px",borderRadius:"50%"}}
-                        >favorite_border</i>{" "}
-                    {likes}
-                </h4>
-            )} 
-            <div style = {{height:"50px", width:"1000px", objectFit:"fill"}}>
-                <p>{post.body}</p>
-                <Link 
-                    className="waves-effect waves-light btn-small right blue" 
-                    to={`/`}> 
-                    Back to home
+                <h3 onClick={this.likeToggle}>
+                    <i
+                        className="fa fa-thumbs-up text-warning bg-dark"
+                        style={{ padding: '10px', borderRadius: '50%' }}
+                    />{' '}
+                    {likes} Like
+                </h3>
+            )}
+
+            <p className="card-text">{post.body}</p>
+            <br />
+            <p className="font-italic mark">
+                Posted by <Link to={`${postedId}`}>{postedName} </Link>
+                on {new Date(post.created).toDateString()}
+            </p>
+            <div className="d-inline-block">
+                <Link to={`/`} className="btn btn-raised btn-primary btn-sm mr-5">
+                    Back to posts
                 </Link>
+
                 {isAuthenticated().user && isAuthenticated().user._id === post.postedBy._id && (
                     <>
-                    <Link
-                        className="waves-effect waves-light btn-small right blue"
-                        to={`/post/edit/${post._id}`}
-                    > 
-                    update Post
-                    </Link>    
-                    <Link
-                        to = ""
-                        onClick = {this.deleteConfirmed}
-                        className="waves-effect waves-light btn-small right blue"
-                    > 
-                    delete Post
-                    </Link>
+                        <Link to={`/post/edit/${post._id}`} className="btn btn-raised btn-warning btn-sm mr-5">
+                            Update Post
+                        </Link>
+                        <button onClick={this.deleteConfirmed} className="btn btn-raised btn-danger">
+                            Delete Post
+                        </button>
                     </>
                 )}
-                <span className="text-italic mark">
-                        PostedBy <Link to={`/user/${postedId}`}>{postedName} </Link>
-                        on {new Date(post.created).toLocaleString()}
-                </span>
+
+                <div>
+                    {isAuthenticated().user && isAuthenticated().user.role === 'admin' && (
+                        <div class="card mt-5">
+                            <div className="card-body">
+                                <h5 className="card-title">Admin</h5>
+                                <p className="mb-2 text-danger">Edit/Delete as an Admin</p>
+                                <Link
+                                    to={`/post/edit/${post._id}`}
+                                    className="btn btn-raised btn-warning btn-sm mr-5"
+                                >
+                                    Update Post
+                                </Link>
+                                <button onClick={this.deleteConfirmed} className="btn btn-raised btn-danger">
+                                    Delete Post
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-            </div>
-            </div>
+        </div>
         )
     }
 
@@ -169,57 +184,18 @@ class SinglePost extends Component {
             return <Redirect to = {`/signin`} />
         }
         return (
-            <div className = "container">
-                <h2 className = "header">{post.title}</h2>
-                {!post ? ( <div className =  'center'>
-                <div className="preloader-wrapper big active">
-                        <div className="spinner-layer spinner-blue">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
+            <div className="container">
+                <h2 className="display-2 mt-5 mb-5">{post.title}</h2>
 
-                        <div className="spinner-layer spinner-red">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
+                {!post ? (
+                    <div className="jumbotron text-center">
+                        <h2>Loading...</h2>
+                    </div>
+                ) : (
+                    this.renderPost(post)
+                )}
 
-                        <div className="spinner-layer spinner-yellow">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
-
-                        <div className="spinner-layer spinner-green">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div><div className="gap-patch">
-                                <div className="circle"></div>
-                            </div><div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
-                    </div></div> ) : ( 
-                        this.renderPost(post)
-                    )}
-                    <Comment style = {{height:"600px", width:"1000px", objectFit:"fill"}} 
-                        postId = {post._id} 
-                        comments = {comments.reverse()} 
-                        updateComments = {this.updateComments}       
-                    />                 
+                <Comment postId={post._id} comments={comments.reverse()} updateComments={this.updateComments} />
             </div>
         )
     }   

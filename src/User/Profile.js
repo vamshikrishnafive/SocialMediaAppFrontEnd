@@ -85,71 +85,88 @@ class Profile extends Component {
         const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultImage
 
         return (
-        <div className = "row">
-            <div style={{maxWidth:"550px",margin:"0px auto"}}>
-                <div style = {{
-                    display:"flex",
-                    justifyContent:"space-around",
-                    margin:"25px 0px",
-                    borderBottom:"1px solid grey"
-                    }}>
-                    <div>
-                        <img
-                            src={photoUrl}
-                            alt={user.name}
-                            style = {{width:"160px",height:"160px",borderRadius:"80px"}}
-                            onError={i => (i.target.src = `${DefaultImage}`)}
-                        />
-                    </div>
-                    <div>
-                        <h4> {user.name} </h4>
-                        <div style = {{display:"flex",justifyContent:"space-between",width:"108%"}}>
-                            <h6> {posts.length} posts </h6>
-                            <h6> {user.followers.length} followers </h6>
-                            <h6> {user.following.length} following </h6>
-                        </div>
-                    </div>
+            <div className="container">
+            <h2 className="mt-5 mb-5">Profile</h2>
+            <div className="row">
+              <div className="col-md-4">
+                <img
+                  style={{ height: "200px", width: "auto" }}
+                  className="img-thumbnail"
+                  src={photoUrl}
+                  onError={i => (i.target.src = `${DefaultImage}`)}
+                  alt={user.name}
+                />
+              </div>
+    
+              <div className="col-md-8">
+                <div className="lead mt-2">
+                  <p>Hello {user.name}</p>
+                  <p>Email: {user.email}</p>
+                  <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
                 </div>
-
-                <div>
-                    <p> Email: {user.email} </p>
-                    <p> {`Joined on ${new Date(user.created).toUTCString()}`} </p>
-                    <p>{user.about}</p>
-                {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
-                <div className="col s10 flow-text" >
+    
+                {isAuthenticated().user &&
+                isAuthenticated().user._id === user._id ? (
+                  <div className="d-inline-block">
                     <Link
-                        className="waves-effect waves-light btn-small #0d47a1 white darken-4 left"
-                        to={`/user/edit/${this.state.user._id}`}>
-                        <i class="material-icons">create</i>
+                      className="btn btn-raised btn-info mr-5"
+                      to={`/post/create`}
+                    >
+                      Create Post
                     </Link>
+    
                     <Link
-                        className="waves-effect waves-light btn-small #0d47a1 white darken-4 left"
-                        to={`/post/create`} >
-                        <i class="material-icons">add_a_photo</i>
+                      className="btn btn-raised btn-success mr-5"
+                      to={`/user/edit/${user._id}`}
+                    >
+                      Edit Profile
                     </Link>
                     <DeleteUser userId={user._id} />
-                </div>
+                  </div>
                 ) : (
-                
-                <FollowProfileButton
-                following={this.state.following}
-                onButtonclick={this.clickFollowButton}
-                />
-                
+                  <FollowProfileButton
+                    following={this.state.following}
+                    onButtonClick={this.clickFollowButton}
+                  />
                 )}
+    
+                <div>
+                  {isAuthenticated().user &&
+                    isAuthenticated().user.role === "admin" && (
+                      <div class="card mt-5">
+                        <div className="card-body">
+                          <h5 className="card-title">Admin</h5>
+                          <p className="mb-2 text-danger">
+                            Edit/Delete as an Admin
+                          </p>
+                          <Link
+                            className="btn btn-raised btn-success mr-5"
+                            to={`/user/edit/${user._id}`}
+                          >
+                            Edit Profile
+                          </Link>
+                          {/*<DeleteUser userId={user._id} />*/}
+                          <DeleteUser />
+                        </div>
+                      </div>
+                    )}
                 </div>
+              </div>
             </div>
-            <br/>
-            <div className = "row">
-            <br/>
-            <ProfileTabs
-                following={user.following}
-                followers={user.followers}
-                posts={posts}
-            />
+            <div className="row">
+              <div className="col md-12 mt-5 mb-5">
+                <hr />
+                <p className="lead">{user.about}</p>
+                <hr />
+    
+                <ProfileTabs
+                  followers={user.followers}
+                  following={user.following}
+                  posts={posts}
+                />
+              </div>
             </div>
-           
-        </div>
+          </div>
         )
     }
 }

@@ -20,7 +20,7 @@ class Signin extends Component {
         this.setState({ [name]: event.target.value, loading:false})
     }
 
-    clickToSubmit = event => {
+    clickSubmit = event => {
         event.preventDefault()
         this.setState({ loading: true })
         const { email, password } = this.state
@@ -40,35 +40,34 @@ class Signin extends Component {
             })
     }
 
-    SigninForm = (email, password,) => (
-        <div className = "myCard">
-            <div className="card auth-card input-field">
-                <h1> Instagram </h1>    
+    signinForm = (email, password,) => (
+        <form>
+            <div className="form-group">
+                <label className="text-muted">Email</label>
                 <input
-                    type="text"
-                    className = "from-control" 
                     onChange={this.handleChange("email")}
+                    type="email"
+                    className="form-control"
                     value={email}
-                    placeholder = "Email"
                 />
-                
-                <input
-                    type="password"
-                    onChange={this.handleChange("password")}
-                    value={password}
-                    placeholder = "password"
-                />
-                <button onClick={this.clickToSubmit} className="btn waves-effect waves-light #1e88e5 blue darken-1" >Submit </button>
-                <SocialLogin />
-                {this.state.loading ? (<p>
-                    <Link to='/forgotpassword' className="btn float-right center">
-                        {" "}
-                        forgotPassword
-                    </Link>
-                </p>) : (" ")}
-                <h5><Link to = "/signup">Create Account..!</Link></h5>         
             </div>
-        </div>
+            <div className="form-group">
+                <label className="text-muted">Password</label>
+                <input
+                    onChange={this.handleChange("password")}
+                    type="password"
+                    className="form-control"
+                    value={password}
+                />
+            </div>
+
+            <button
+                onClick={this.clickSubmit}
+                className="btn btn-raised btn-primary"
+            >
+                Submit
+            </button>
+        </form>
     )
 
     render() {
@@ -79,55 +78,39 @@ class Signin extends Component {
         }
         return (
             <div className="container">
+                <h2 className="mt-5 mb-5">SignIn</h2>
+                <hr />
+                <SocialLogin />
+
+                <hr />
+                <br />
+
                 <div
                     className="alert alert-danger"
-                    style={{ display: error ? "" : "none" }}>
+                    style={{ display: error ? "" : "none" }}
+                >
                     {error}
                 </div>
-                {loading ? <div className =  'center'>
-                    <div class="preloader-wrapper big active">
-                        <div class="spinner-layer spinner-blue">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
 
-                        <div class="spinner-layer spinner-red">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
+                {loading ? (
+                    <div className="jumbotron text-center">
+                        <h2>Loading...</h2>
+                    </div>
+                ) : (
+                    ""
+                )}
 
-                        <div class="spinner-layer spinner-yellow">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
+                {this.signinForm(email, password)}
 
-                        <div class="spinner-layer spinner-green">
-                            <div class="circle-clipper left">
-                                <div class="circle"></div>
-                            </div><div class="gap-patch">
-                                <div class="circle"></div>
-                            </div><div class="circle-clipper right">
-                                <div class="circle"></div>
-                            </div>
-                        </div>
-                    </div></div> : ""}
-
-                {this.SigninForm(email, password,)}
+                <p>
+                    <Link
+                        to="/forgotpassword"
+                        className="btn btn-raised btn-danger"
+                    >
+                        {" "}
+                        Forgot Password
+                    </Link>
+                </p>
             </div>
         )
     }
